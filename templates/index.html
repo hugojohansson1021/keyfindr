@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KeyFindr</title>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">▮▮</span>
+        <span class="brand-name">KEYFINDR</span>
+        <span class="brand-version">v0.1</span>
+      </div>
+      <div class="status-pill">
+        <span class="dot"></span>
+        <span>local · 127.0.0.1</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <section class="panel">
+          <h2>TOOLS</h2>
+          <ul id="tool-list" class="tool-list"></ul>
+        </section>
+
+        <section class="panel">
+          <h2>RECENT RUNS</h2>
+          <ul id="run-list" class="run-list">
+            <li class="empty">no runs yet</li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>REPORTS</h2>
+          <ul id="report-list" class="report-list">
+            <li class="empty">no reports yet</li>
+          </ul>
+          <button id="refresh-reports" class="ghost">refresh</button>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <div class="tool-header">
+          <h1 id="tool-title">select a tool</h1>
+          <p id="tool-description" class="muted"></p>
+        </div>
+
+        <form id="tool-form" class="tool-form" autocomplete="off"></form>
+
+        <div class="actions">
+          <button id="run-btn" class="primary" disabled>▶ RUN</button>
+          <button id="stop-btn" class="danger" disabled>■ STOP</button>
+          <span id="run-meta" class="muted"></span>
+        </div>
+
+        <div id="endpoint-panel" class="endpoint-panel" hidden>
+          <div class="endpoint-panel-header">
+            <span>ENDPOINTS</span>
+            <div class="endpoint-summary">
+              <span class="badge badge-exposed"><span class="badge-dot"></span><span id="endpoint-exposed-count">0</span> exposed</span>
+              <span class="badge badge-reachable"><span class="badge-dot"></span><span id="endpoint-reachable-count">0</span> reachable</span>
+              <span class="badge badge-safe"><span class="badge-dot"></span><span id="endpoint-safe-count">0</span> safe</span>
+              <span class="badge badge-tested" id="endpoint-tested-label">0 tested</span>
+            </div>
+          </div>
+          <div id="endpoint-body" class="endpoint-body"></div>
+        </div>
+
+        <div id="graph-panel" class="graph-panel" hidden>
+          <div class="graph-header">
+            <span>SUBDOMAIN GRAPH</span>
+            <div class="graph-controls">
+              <button id="graph-zoom-out" class="graph-btn" title="zoom out">−</button>
+              <span id="graph-zoom-level" class="graph-zoom-level">160%</span>
+              <button id="graph-zoom-in" class="graph-btn" title="zoom in">+</button>
+              <button id="graph-reset" class="graph-btn graph-btn-reset" title="reset view">⟲</button>
+            </div>
+            <div class="graph-legend">
+              <span class="legend-dot ok"></span>200
+              <span class="legend-dot bad"></span>other
+              <span class="legend-dot dead"></span>unreachable
+              <span class="legend-count" id="graph-count">0 nodes</span>
+            </div>
+          </div>
+          <svg id="graph-svg" class="graph-svg" viewBox="-500 -300 1000 600" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <filter id="glow-green" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <g id="graph-view">
+              <g id="graph-edges"></g>
+              <g id="graph-nodes"></g>
+              <g id="graph-labels"></g>
+            </g>
+          </svg>
+
+          <aside id="graph-detail" class="graph-detail" hidden>
+            <header class="graph-detail-header">
+              <span id="graph-detail-status" class="graph-detail-status"></span>
+              <span id="graph-detail-host" class="graph-detail-host"></span>
+              <button id="graph-detail-close" class="graph-detail-close" title="close (esc)">×</button>
+            </header>
+            <dl id="graph-detail-body" class="graph-detail-body"></dl>
+          </aside>
+        </div>
+
+        <div id="keytree-panel" class="graph-panel" hidden>
+          <div class="graph-header">
+            <span>SECRET SCAN TREE</span>
+            <div class="graph-controls">
+              <button id="kt-zoom-out" class="graph-btn" title="zoom out">−</button>
+              <span id="kt-zoom-level" class="graph-zoom-level">100%</span>
+              <button id="kt-zoom-in" class="graph-btn" title="zoom in">+</button>
+              <button id="kt-reset" class="graph-btn graph-btn-reset" title="reset view">⟲</button>
+            </div>
+            <div class="graph-legend">
+              <span class="legend-dot sev-high"></span>high
+              <span class="legend-dot sev-med"></span>medium
+              <span class="legend-dot sev-low"></span>low
+              <span class="legend-count" id="kt-count">0 secrets</span>
+            </div>
+          </div>
+          <svg id="kt-svg" class="graph-svg" viewBox="-500 -300 1000 600" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <filter id="kt-glow-green" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="kt-glow-red" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <marker
+                id="kt-arrow"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="5"
+                markerHeight="5"
+                orient="auto-start-reverse"
+              >
+                <path d="M0,0 L10,5 L0,10 z" fill="context-stroke" />
+              </marker>
+            </defs>
+            <g id="kt-view">
+              <g id="kt-edges"></g>
+              <g id="kt-nodes"></g>
+              <g id="kt-labels"></g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <span>TERMINAL</span>
+            <div class="terminal-actions">
+              <button id="clear-btn" class="ghost">clear</button>
+              <button id="copy-btn" class="ghost">copy</button>
+              <button id="download-btn" class="ghost">download .log</button>
+            </div>
+          </div>
+          <pre id="terminal" class="terminal-output" tabindex="0"></pre>
+        </div>
+
+        <p class="disclaimer">
+          Only run against systems you own or have explicit written
+          permission to test.
+        </p>
+      </section>
+    </main>
+
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
