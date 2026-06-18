@@ -1,4 +1,4 @@
-# KeyFindr - Web Security Testing Tools
+# KeyFindr - Cyber Security Testing Tools for webbapps
 
 ![KeyFindr](public/Sk%C3%A4rmavbild%202026-06-16%20kl.%2018.06.41.png)
 
