@@ -1,0 +1,72 @@
+# Craft CMS wordlist for find_hidden_pages.py
+# Curated list of Craft CMS-specific paths. Lines starting with "#" are comments.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/craftcms.txt
+
+# --- Core entry points ---
+admin/
+admin/login
+admin/dashboard
+admin/settings
+index.php?p=admin
+actions/
+actions/users/login
+
+# --- Version / fingerprint disclosure ---
+CHANGELOG.md
+README.md
+LICENSE.md
+composer.json
+composer.lock
+craft
+
+# --- Config files (high-value) ---
+.env
+.env.example
+config/general.php
+config/db.php
+config/license.key
+config/project/project.yaml
+config/app.php
+storage/runtime/
+
+# --- Sensitive directories ---
+config/
+config/project/
+storage/
+storage/logs/
+storage/runtime/
+storage/backups/
+templates/
+modules/
+vendor/
+web/cpresources/
+
+# --- Logs and backups ---
+storage/logs/web.log
+storage/logs/phperrors.log
+storage/logs/queue.log
+storage/backups/
+
+# --- Common backup / dump artifacts ---
+backup.sql
+database.sql
+craft.sql
+dump.sql
+storage/backups/
+
+# --- Control panel actions ---
+actions/app/check-for-updates
+actions/users/get-remaining-session-time
+actions/users/save-user
+admin/utilities
+admin/utilities/php-info
+
+# --- Generic sensitive files ---
+.htaccess
+.git/config
+error_log
+php.ini
+info.php
+phpinfo.php

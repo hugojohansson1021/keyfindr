@@ -18,7 +18,6 @@ cd keyfindr
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 python app.py
-
 ```
 
 Then open `http://127.0.0.1:5000` in your browser.
@@ -33,6 +32,49 @@ Deactivate the environment when done:
 ```bash
 deactivate
 ```
+
+
+## Webb-GUI
+
+Startar du `python app.py` får du ett lokalt gränssnitt på
+`http://127.0.0.1:5000` som binder enbart till `127.0.0.1`. GUI:t samlar
+alla skript på ett ställe så du slipper komma ihåg flaggor.
+
+**Så funkar det:**
+
+- Välj verktyg i sidopanelen — `keyFinder.py`, `find_hidden_pages.py`,
+  `subdomain_spider.py`, `wp_scanner.py` och `api_secret_scanner.py`.
+- Formuläret byggs dynamiskt från varje verktygs flaggor (definierade i
+  `gui/tools.py`), så fälten matchar alltid CLI-argumenten.
+- Klicka **RUN** för att starta. Skriptet körs som en subprocess och dess
+  utdata streamas live till terminalfönstret via Server-Sent Events. **STOP**
+  avbryter en pågående körning.
+
+### Terminalfönstret
+
+Under formuläret visas ett inbyggt terminalfönster som speglar exakt vad
+skriptet skriver ut medan det kör. Längst upp visas det fullständiga
+kommandot som körs (t.ex.
+`run … find_hidden_pages.py --url https://currykitchen.se/ --wordlist wordlists/wordpress.txt --threads 20 --timeout 5`)
+så att en körning alltid är reproducerbar från CLI.
+
+Knappar i terminalens verktygsrad:
+
+- **CLEAR** — rensar fönstret.
+- **COPY** — kopierar hela loggen till urklipp.
+- **DOWNLOAD .LOG** — sparar loggen som en `.log`-fil.
+
+**Sammanfattning av det viktiga.** Det relevanta i en körning står i de
+sista raderna, inte i bruset ovanför:
+
+- `[HITTAD]`-rader = bekräftade träffar med `Status` och svarets `Längd`,
+  t.ex. `[HITTAD] https://currykitchen.se/wp-login.php (Status: 200, Längd: 1311)`.
+- Slutsammanfattningen talar om var resultatet sparats, t.ex.
+  `Sökning klar! Hittade sidor sparade i doldasidor_currykitchen_se.csv`.
+- `[exit 0]` betyder att processen avslutades utan fel; en annan kod
+  signalerar att något gick snett.
+
+Scrolla alltså till botten för facit — träffarna och var de hamnade.
 
 
 ## Snabbkommandon
@@ -64,10 +106,20 @@ python subdomain_spider.py \
 
 ### Hitta dolda sidor
 
+Generell ordlista:
+
 ```bash
 python find_hidden_pages.py \
   --url https://example.com \
-  --wordlist common.txt
+  --wordlist wordlists/common.txt
+```
+
+CMS-specifik ordlista (t.ex. WordPress):
+
+```bash
+python find_hidden_pages.py \
+  --url https://example.com \
+  --wordlist wordlists/wordpress.txt
 ```
 
 
@@ -76,8 +128,7 @@ python find_hidden_pages.py \
 Passiv skanning:
 
 ```bash
-python keyFinder.py --url 
-
+python keyFinder.py --url https://example.com
 ```
 
 Aktiv skanning:
@@ -202,17 +253,52 @@ Discovers hidden or forgotten paths by testing a wordlist against a target domai
 
 What it does:
 
-- Reads paths from a wordlist such as `common.txt`.
+- Reads paths from a wordlist such as `wordlists/common.txt`.
 - Sends parallel HTTP requests to `BASE_URL/path`.
 - Reports paths that return HTTP `200`.
 - Writes results to a CSV file.
+
+#### Välj ordlista per CMS
+
+Verktyget levereras med flera kurerade ordlistor i `wordlists/` — en generell
+(`common.txt`) och dedikerade listor per CMS. Peka `--wordlist` mot den som
+matchar målet:
+
+| CMS | Ordlista |
+| --- | --- |
+| Generell | `wordlists/common.txt` |
+| WordPress | `wordlists/wordpress.txt` |
+| Joomla | `wordlists/joomla.txt` |
+| Drupal | `wordlists/drupal.txt` |
+| Magento / Adobe Commerce | `wordlists/magento.txt` |
+| PrestaShop | `wordlists/prestashop.txt` |
+| TYPO3 | `wordlists/typo3.txt` |
+| Ghost | `wordlists/ghost.txt` |
+| Craft CMS | `wordlists/craftcms.txt` |
+| Concrete CMS | `wordlists/concrete.txt` |
+| OpenCart | `wordlists/opencart.txt` |
+| Shopify | `wordlists/shopify.txt` |
+| Wix | `wordlists/wix.txt` |
+| Squarespace | `wordlists/squarespace.txt` |
+
+De CMS-specifika listorna fokuserar på inloggning-, config-, backup- och
+API-sökvägar som ofta läcker på just den plattformen. Hostade plattformar
+(Shopify, Wix, Squarespace) har ingen self-hosted backend att fuzza, så de
+listorna inriktar sig på publikt nåbara routes, JSON-endpoints och
+fingerprinting — det noteras i varje fils header.
+
+I webb-GUI:t väljs ordlistan i en dropdown som auto-upptäcker alla `.txt` i
+`wordlists/` och visar dem med läsbara namn (t.ex. "WordPress" i stället för
+`wordlists/wordpress.txt`). Släng in en ny `.txt` i mappen så dyker den upp
+automatiskt; lägg till en rad i `WORDLIST_LABELS` i `app.py` för en snygg
+etikett.
 
 Example:
 
 ```bash
 python find_hidden_pages.py \
   --url https://example.com \
-  --wordlist common.txt \
+  --wordlist wordlists/wordpress.txt \
   --threads 20 \
   --timeout 5
 ```
@@ -222,7 +308,7 @@ Optional output file:
 ```bash
 python find_hidden_pages.py \
   --url https://example.com \
-  --wordlist common.txt \
+  --wordlist wordlists/common.txt \
   --output results.csv
 ```
 
@@ -452,11 +538,12 @@ It contains regular expressions for detecting common exposed secrets, including:
 - Webhook URLs
 - Cloud function/API endpoints
 
-### `common.txt`
+### Wordlists: `wordlists/`
 
-Wordlist used by `find_hidden_pages.py`.
+Ordlistorna som `find_hidden_pages.py` använder ligger samlade i `wordlists/`.
+Rader som börjar med `#` är kommentarer och hoppas över av skannern.
 
-It contains common hidden paths and files such as:
+**`wordlists/common.txt`** — den generella listan med vanliga dolda sökvägar:
 
 - admin paths
 - dotfiles
@@ -465,13 +552,28 @@ It contains common hidden paths and files such as:
 - backup paths
 - common framework and server files
 
+**CMS-specifika listor** — kurerade per plattform med fokus på inloggning,
+config/backup-filer, känsliga kataloger och API-endpoints:
+
+- `wordpress.txt`, `joomla.txt`, `drupal.txt`, `magento.txt`,
+  `prestashop.txt`, `typo3.txt`, `ghost.txt`, `craftcms.txt`,
+  `concrete.txt`, `opencart.txt` (self-hosted CMS)
+- `shopify.txt`, `wix.txt`, `squarespace.txt` (hostade plattformar —
+  fokus på publika routes, JSON-endpoints och fingerprinting)
+
+Alla `.txt`-filer i mappen dyker automatiskt upp i webb-GUI:ts
+ordliste-dropdown. Lägg till egna listor genom att skapa en ny `.txt` här.
+
 ## Typical Workflow
 
 1. Discover exposed paths:
 
 ```bash
-python find_hidden_pages.py --url https://example.com --wordlist common.txt
+python find_hidden_pages.py --url https://example.com --wordlist wordlists/common.txt
 ```
+
+Mot en känd CMS, byt till en dedikerad lista (t.ex.
+`wordlists/wordpress.txt`) för bättre träffbild.
 
 2. Review interesting paths from the CSV output.
 

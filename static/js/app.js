@@ -104,6 +104,17 @@ function renderForm(tool) {
       label.textContent = field.label || field.name;
       wrap.appendChild(input);
       wrap.appendChild(label);
+    } else if (field.type === "select") {
+      const label = document.createElement("label");
+      label.htmlFor = `f-${field.name}`;
+      label.textContent = (field.label || field.name) + (field.required ? " *" : "");
+      const select = document.createElement("select");
+      select.id = `f-${field.name}`;
+      select.dataset.name = field.name;
+      select.dataset.type = "select";
+      wrap.appendChild(label);
+      wrap.appendChild(select);
+      populateSelect(select, field);
     } else {
       const label = document.createElement("label");
       label.htmlFor = `f-${field.name}`;
@@ -124,9 +135,42 @@ function renderForm(tool) {
   }
 }
 
+// Fill a <select> with options. When the field declares an options_source,
+// fetch the list from the matching API endpoint (e.g. "wordlists") so new
+// files dropped into that directory appear automatically; otherwise use the
+// static options array on the field.
+async function populateSelect(select, field) {
+  let options = field.options || [];
+  if (field.options_source === "wordlists") {
+    try {
+      const res = await fetch("/api/wordlists");
+      const data = await res.json();
+      options = data.wordlists || [];
+    } catch {
+      options = [];
+    }
+  }
+  // Normalize to {value, label}; the wordlists endpoint returns objects,
+  // static field.options may still be plain strings.
+  options = options.map((opt) =>
+    typeof opt === "string" ? { value: opt, label: opt } : opt
+  );
+  if (field.default && !options.some((opt) => opt.value === field.default)) {
+    options = [{ value: field.default, label: field.default }, ...options];
+  }
+  select.innerHTML = "";
+  for (const opt of options) {
+    const o = document.createElement("option");
+    o.value = opt.value;
+    o.textContent = opt.label;
+    select.appendChild(o);
+  }
+  if (field.default) select.value = field.default;
+}
+
 function collectValues() {
   const values = {};
-  for (const input of els.form.querySelectorAll("input")) {
+  for (const input of els.form.querySelectorAll("input, select")) {
     const name = input.dataset.name;
     const type = input.dataset.type;
     if (type === "bool") {

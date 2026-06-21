@@ -1,0 +1,74 @@
+# TYPO3 wordlist for find_hidden_pages.py
+# Curated list of TYPO3-specific paths. Lines starting with "#" are comments.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/typo3.txt
+
+# --- Core entry points ---
+typo3/
+typo3/index.php
+typo3/install/
+typo3/install.php
+typo3conf/
+index.php
+
+# --- Version / fingerprint disclosure ---
+typo3_src/
+README.md
+LICENSE.txt
+INSTALL.md
+composer.json
+composer.lock
+typo3/sysext/core/composer.json
+
+# --- Config files (high-value) ---
+typo3conf/LocalConfiguration.php
+typo3conf/AdditionalConfiguration.php
+typo3conf/localconf.php
+typo3conf/PackageStates.php
+config/system/settings.php
+config/system/additional.php
+typo3conf/LocalConfiguration.php.bak
+
+# --- Sensitive directories ---
+typo3conf/ext/
+typo3temp/
+typo3temp/var/
+typo3temp/assets/
+fileadmin/
+fileadmin/user_upload/
+uploads/
+typo3/sysext/
+vendor/
+var/
+var/log/
+
+# --- Logs and exports ---
+typo3temp/var/log/
+typo3temp/var/logs/typo3_*.log
+var/log/typo3_*.log
+
+# --- Common backup / dump artifacts ---
+backup.sql
+database.sql
+typo3.sql
+dump.sql
+fileadmin/backup/
+db.sql.gz
+
+# --- Install tool and backend ---
+typo3/install/index.php
+typo3/sysext/install/
+typo3/cms/
+typo3/backend.php
+typo3/login
+
+# --- Generic sensitive files ---
+.env
+.htaccess
+.htpasswd
+.git/config
+error_log
+php.ini
+info.php
+phpinfo.php

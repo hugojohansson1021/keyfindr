@@ -7,7 +7,13 @@ from urllib.parse import urlparse
 
 def load_paths(wordlist_file):
     with open(wordlist_file, "r", encoding="utf-8", errors="ignore") as file:
-        return [line.strip() for line in file if line.strip()]
+        paths = []
+        for line in file:
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#"):
+                continue
+            paths.append(stripped)
+        return paths
 
 def check_path(args):
     path, base_url, headers, timeout = args

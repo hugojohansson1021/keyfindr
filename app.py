@@ -35,6 +35,46 @@ def list_tools():
     return jsonify({"tools": list(TOOLS.values())})
 
 
+# Friendly display names for known wordlists. Anything not listed here falls
+# back to a title-cased version of the file stem.
+WORDLIST_LABELS = {
+    "common": "Common (generic)",
+    "wordpress": "WordPress",
+    "joomla": "Joomla",
+    "drupal": "Drupal",
+    "magento": "Magento / Adobe Commerce",
+    "prestashop": "PrestaShop",
+    "typo3": "TYPO3",
+    "ghost": "Ghost",
+    "craftcms": "Craft CMS",
+    "concrete": "Concrete CMS",
+    "opencart": "OpenCart",
+    "shopify": "Shopify",
+    "wix": "Wix",
+    "squarespace": "Squarespace",
+}
+
+
+def _wordlist_label(stem: str) -> str:
+    return WORDLIST_LABELS.get(stem.lower(), stem.replace("-", " ").replace("_", " ").title())
+
+
+@app.route("/api/wordlists")
+def list_wordlists():
+    wl_dir = PROJECT_ROOT / "wordlists"
+    if not wl_dir.exists():
+        return jsonify({"wordlists": []})
+    files = sorted(
+        (
+            {"value": f"wordlists/{path.name}", "label": _wordlist_label(path.stem)}
+            for path in wl_dir.glob("*.txt")
+            if path.is_file()
+        ),
+        key=lambda item: item["label"].lower(),
+    )
+    return jsonify({"wordlists": files})
+
+
 @app.route("/api/runs", methods=["POST"])
 def create_run():
     payload = request.get_json(silent=True) or {}

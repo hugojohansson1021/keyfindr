@@ -1,0 +1,66 @@
+# Concrete CMS (formerly concrete5) wordlist for find_hidden_pages.py
+# Curated list of Concrete CMS-specific paths. Lines starting with "#" are comments.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/concrete.txt
+
+# --- Core entry points ---
+index.php/dashboard/
+index.php/login/
+dashboard/
+login/
+install/
+index.php/install/
+ccm/system/
+
+# --- Version / fingerprint disclosure ---
+concrete/CHANGELOG
+README.md
+LICENSE.txt
+concrete/config/concrete.php
+composer.json
+
+# --- Config files (high-value) ---
+application/config/database.php
+application/config/app.php
+application/config/site.php
+application/config/generated_overrides/
+config/database.php
+
+# --- Sensitive directories ---
+application/
+application/config/
+application/files/
+application/files/cache/
+application/files/tmp/
+application/files/incoming/
+concrete/
+packages/
+updates/
+application/languages/
+
+# --- Logs and backups ---
+application/files/logs/
+application/files/tmp/
+
+# --- Common backup / dump artifacts ---
+backup.sql
+database.sql
+concrete5.sql
+concrete.sql
+dump.sql
+
+# --- Dashboard / admin paths ---
+index.php/dashboard/system/
+index.php/dashboard/system/environment/info
+index.php/dashboard/users/
+index.php/dashboard/files/
+
+# --- Generic sensitive files ---
+.env
+.htaccess
+.git/config
+error_log
+php.ini
+info.php
+phpinfo.php

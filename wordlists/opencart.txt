@@ -1,0 +1,70 @@
+# OpenCart wordlist for find_hidden_pages.py
+# Curated list of OpenCart-specific paths. Lines starting with "#" are comments.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/opencart.txt
+
+# --- Core entry points ---
+admin/
+admin/index.php
+index.php?route=common/home
+index.php?route=account/login
+install/
+install/index.php
+
+# --- Version / fingerprint disclosure ---
+README.md
+CHANGELOG.md
+license.txt
+upload/
+admin/view/template/common/
+
+# --- Config files (high-value) ---
+config.php
+admin/config.php
+config.php.bak
+admin/config.php.bak
+config-dist.php
+admin/config-dist.php
+
+# --- Sensitive directories ---
+system/
+system/storage/
+system/storage/logs/
+system/storage/cache/
+system/storage/download/
+system/storage/upload/
+system/storage/backup/
+catalog/
+image/
+image/cache/
+admin/controller/
+vendor/
+
+# --- Logs and backups ---
+system/storage/logs/error.log
+system/logs/error.log
+system/storage/backup/
+
+# --- Common backup / dump artifacts ---
+backup.sql
+database.sql
+opencart.sql
+dump.sql
+system/storage/backup/
+
+# --- Admin / API routes ---
+index.php?route=api/login
+admin/index.php?route=common/dashboard
+admin/index.php?route=user/user
+index.php?route=feed/google_sitemap
+
+# --- Generic sensitive files ---
+.env
+.htaccess
+.htpasswd
+.git/config
+error_log
+php.ini
+info.php
+phpinfo.php

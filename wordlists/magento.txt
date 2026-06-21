@@ -1,0 +1,105 @@
+# Magento / Adobe Commerce wordlist for find_hidden_pages.py
+# Curated list of Magento 1.x + 2.x paths. Lines starting with "#" are comments.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/magento.txt
+
+# --- Core entry points ---
+admin/
+index.php/admin/
+admin/dashboard/
+downloader/
+index.php
+setup/
+setup/index.php/
+pub/
+pub/index.php
+index.php/rss
+
+# --- Version / fingerprint disclosure ---
+magento_version
+RELEASE_NOTES.txt
+LICENSE.txt
+LICENSE_AFL.txt
+COPYING.txt
+composer.json
+composer.lock
+app/etc/config.php
+nginx.conf.sample
+.htaccess.sample
+
+# --- Config files (high-value) ---
+app/etc/local.xml
+app/etc/env.php
+app/etc/config.php
+app/etc/local.xml.bak
+app/etc/local.xml.old
+app/etc/env.php.bak
+app/etc/env.php.save
+
+# --- Sensitive directories ---
+var/
+var/log/
+var/report/
+var/backups/
+var/export/
+var/cache/
+var/session/
+media/
+media/catalog/
+pub/media/
+pub/static/
+app/
+app/code/
+app/design/
+lib/
+vendor/
+errors/
+errors/local.xml
+
+# --- Logs and error reports ---
+var/log/system.log
+var/log/exception.log
+var/log/debug.log
+var/report/
+errors/report.php
+
+# --- Common backup / dump artifacts ---
+backup.sql
+database.sql
+magento.sql
+dump.sql
+var/backups/
+backup.tar.gz
+db.sql.gz
+
+# --- REST / GraphQL / SOAP API ---
+rest/V1/
+rest/default/V1/
+rest/V1/products
+rest/V1/customers
+rest/all/V1/store/storeViews
+graphql
+soap/
+api/soap/?wsdl
+api/rest
+oauth/token/request
+
+# --- Admin and checkout paths ---
+admin/admin/dashboard/index
+customer/account/login/
+customer/account/create/
+checkout/cart/
+checkout/onepage/
+admin/oauth_authorize
+soap/default?wsdl
+
+# --- Generic sensitive files ---
+.env
+.htaccess
+.htpasswd
+.git/config
+error_log
+php.ini
+info.php
+phpinfo.php

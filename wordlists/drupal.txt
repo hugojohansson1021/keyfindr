@@ -1,0 +1,102 @@
+# Drupal wordlist for find_hidden_pages.py
+# Curated list of Drupal-specific paths. Lines starting with "#" are comments.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/drupal.txt
+
+# --- Core entry points ---
+user/
+user/login
+user/register
+user/password
+admin/
+admin/config
+admin/content
+admin/people
+admin/modules
+admin/reports/status
+?q=user/login
+core/install.php
+install.php
+update.php
+core/update.php
+
+# --- Version / fingerprint disclosure ---
+CHANGELOG.txt
+core/CHANGELOG.txt
+README.txt
+core/README.txt
+INSTALL.txt
+LICENSE.txt
+core/install.php
+core/MAINTAINERS.txt
+web.config
+.ht.router.php
+
+# --- Config and settings files ---
+sites/default/settings.php
+sites/default/settings.local.php
+sites/default/default.settings.php
+sites/default/settings.php.bak
+sites/default/settings.php.old
+sites/default/settings.php.save
+sites/default/settings.php.swp
+sites/default/settings.php~
+sites/default/services.yml
+
+# --- Sensitive directories ---
+sites/default/files/
+sites/default/files/private/
+sites/default/private/
+sites/all/modules/
+sites/all/themes/
+sites/all/libraries/
+core/modules/
+core/themes/
+modules/
+themes/
+profiles/
+libraries/
+vendor/
+vendor/autoload.php
+
+# --- Common backup / dump artifacts ---
+backup.sql
+database.sql
+drupal.sql
+dump.sql
+site.sql
+sites/default/files/backup_migrate/
+sites/default/files/backup_migrate/scheduled/
+sites/default/files/backup_migrate/manual/
+
+# --- REST / JSON:API (Drupal 8+) ---
+jsonapi/
+jsonapi/user/user
+jsonapi/node/article
+jsonapi/node/page
+rest/session/token
+?_format=json
+node?_format=json
+
+# --- High-value / frequently exploited paths ---
+admin/reports/dblog
+admin/config/development/maintenance
+admin/config/development/configuration
+admin/config/system/site-information
+admin/structure
+filter/tips
+node/1
+node/1/edit
+admin/config/services/rss-publishing
+rss.xml
+
+# --- Generic sensitive files ---
+.env
+.htaccess
+.htpasswd
+.git/config
+error_log
+php.ini
+info.php
+phpinfo.php

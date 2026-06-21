@@ -1,0 +1,220 @@
+# WordPress wordlist for find_hidden_pages.py
+# Dedicated, curated list of WordPress-specific paths. Lines starting with
+# "#" are comments and are ignored by the scanner.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/wordpress.txt
+
+# --- Core entry points ---
+wp-login.php
+wp-admin/
+wp-admin/admin-ajax.php
+wp-admin/admin-post.php
+wp-admin/install.php
+wp-admin/upgrade.php
+wp-admin/setup-config.php
+wp-admin/maint/repair.php
+wp-cron.php
+xmlrpc.php
+wp-trackback.php
+wp-links-opml.php
+wp-mail.php
+wp-signup.php
+wp-activate.php
+wp-blog-header.php
+wp-load.php
+wp-settings.php
+
+# --- Version / fingerprint disclosure ---
+readme.html
+license.txt
+wp-includes/
+wp-includes/version.php
+wp-includes/wlwmanifest.xml
+
+# --- Config files and common backup variants ---
+wp-config.php
+wp-config-sample.php
+wp-config.php.bak
+wp-config.php.old
+wp-config.php.orig
+wp-config.php.save
+wp-config.php.swp
+wp-config.php.txt
+wp-config.php~
+.wp-config.php.swp
+wp-config.bak
+wp-config.txt
+
+# --- wp-content (uploads, plugins, themes, logs) ---
+wp-content/
+wp-content/debug.log
+wp-content/uploads/
+wp-content/plugins/
+wp-content/themes/
+wp-content/mu-plugins/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup/
+wp-content/backups/
+wp-content/backup-db/
+wp-content/uploads/backup/
+wp-content/uploads/backwpup/
+wp-content/uploads/dump.sql
+
+# --- REST API ---
+wp-json/
+wp-json/wp/v2/users
+wp-json/wp/v2/posts
+wp-json/wp/v2/pages
+wp-json/wp/v2/media
+wp-json/wp/v2/comments
+wp-json/wp/v2/categories
+wp-json/wp/v2/tags
+wp-json/oembed/1.0/embed
+?rest_route=/wp/v2/users
+
+# --- Author / user enumeration ---
+?author=1
+?author=2
+?author=3
+
+# --- Commonly exposed database / archive dumps ---
+backup.zip
+backup.tar.gz
+backup.sql
+database.sql
+db.sql
+dump.sql
+wordpress.sql
+wp.sql
+site.sql
+
+# --- High-value / frequently vulnerable plugins ---
+wp-content/plugins/akismet/
+wp-content/plugins/contact-form-7/
+wp-content/plugins/elementor/
+wp-content/plugins/woocommerce/
+wp-content/plugins/wordfence/
+wp-content/plugins/jetpack/
+wp-content/plugins/wordpress-seo/
+wp-content/plugins/wp-file-manager/
+wp-content/plugins/all-in-one-wp-migration/
+wp-content/plugins/duplicator/
+wp-content/plugins/updraftplus/
+wp-content/plugins/revslider/
+wp-content/plugins/wp-super-cache/
+
+# --- Generic sensitive files often present on WP hosts ---
+.env
+.htaccess
+.htpasswd
+.git/config
+error_log
+php.ini
+info.php
+phpinfo.php
+
+# --- Additional admin pages ---
+wp-admin/options-general.php
+wp-admin/options.php
+wp-admin/users.php
+wp-admin/user-new.php
+wp-admin/plugins.php
+wp-admin/plugin-install.php
+wp-admin/plugin-editor.php
+wp-admin/theme-editor.php
+wp-admin/themes.php
+wp-admin/update-core.php
+wp-admin/tools.php
+wp-admin/export.php
+wp-admin/import.php
+wp-admin/edit.php
+wp-admin/post-new.php
+wp-admin/network/
+wp-admin/network/settings.php
+wp-admin/customize.php
+
+# --- Extended REST API routes ---
+wp-json/wp/v2/types
+wp-json/wp/v2/statuses
+wp-json/wp/v2/taxonomies
+wp-json/wp/v2/settings
+wp-json/wp/v2/themes
+wp-json/wp/v2/plugins
+wp-json/wp/v2/blocks
+wp-json/wp/v2/search
+wp-json/wp-site-health/v1/
+wp-json/oembed/1.0/proxy
+wp-json/contact-form-7/v1/contact-forms
+wp-json/wc/v3/
+wp-json/wc/store/products
+wp-json/jwt-auth/v1/token
+?rest_route=/
+?rest_route=/wp/v2/posts
+
+# --- AJAX / common exploited actions ---
+wp-admin/admin-ajax.php?action=revslider_show_image
+wp-admin/admin-ajax.php?action=duplicator_download
+wp-admin/admin-ajax.php?action=loadmore
+wp-admin/admin-ajax.php?action=get_wp_options
+
+# --- Debug, install and migration artifacts ---
+wp-admin/install.php?step=1
+wp-content/debug.log.txt
+wp-content/uploads/debug.log
+debug.log
+install.php
+upgrade.php
+wp-content/ai1wm-backups/
+wp-content/updraft/
+wp-content/uploads/duplicator/
+wp-snapshots/
+wp-content/uploads/wp-clone/
+installer.php
+installer-backup.php
+installer-log.txt
+dup-installer/
+
+# --- Theme paths and fingerprinting ---
+wp-content/themes/twentytwentyone/style.css
+wp-content/themes/twentytwentytwo/style.css
+wp-content/themes/twentytwentythree/style.css
+wp-content/themes/twentytwentyfour/style.css
+wp-content/themes/astra/style.css
+wp-content/themes/divi/style.css
+wp-content/themes/hello-elementor/style.css
+
+# --- Additional high-value / frequently vulnerable plugins ---
+wp-content/plugins/wpforms-lite/
+wp-content/plugins/really-simple-ssl/
+wp-content/plugins/litespeed-cache/
+wp-content/plugins/redirection/
+wp-content/plugins/wp-mail-smtp/
+wp-content/plugins/wp-fastest-cache/
+wp-content/plugins/ninja-forms/
+wp-content/plugins/wpdiscuz/
+wp-content/plugins/loginizer/
+wp-content/plugins/mailpoet/
+wp-content/plugins/backwpup/
+wp-content/plugins/wp-rocket/
+wp-content/plugins/google-sitemap-generator/
+wp-content/plugins/tablepress/
+wp-content/plugins/advanced-custom-fields/
+wp-content/plugins/wp-statistics/
+wp-content/plugins/sucuri-scanner/
+
+# --- Plugin / theme manifest and readme disclosure ---
+wp-content/plugins/akismet/readme.txt
+wp-content/plugins/contact-form-7/readme.txt
+wp-content/plugins/elementor/readme.txt
+wp-content/plugins/woocommerce/readme.txt
+wp-content/plugins/wordpress-seo/readme.txt
+
+# --- Sitemaps and feeds ---
+sitemap.xml
+sitemap_index.xml
+wp-sitemap.xml
+feed/
+comments/feed/
+?feed=rss2

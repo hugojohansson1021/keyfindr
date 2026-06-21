@@ -1,0 +1,93 @@
+# PrestaShop wordlist for find_hidden_pages.py
+# Curated list of PrestaShop-specific paths. Lines starting with "#" are comments.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/prestashop.txt
+
+# --- Core entry points ---
+admin/
+admin-dev/
+adminpanel/
+index.php
+install/
+install-dev/
+install/index.php
+
+# --- Version / fingerprint disclosure ---
+docs/
+README.md
+CHANGELOG.txt
+LICENSES
+INSTALL.txt
+config/settings.inc.php
+config/autoload.php
+app/AppKernel.php
+composer.json
+
+# --- Config files (high-value) ---
+config/settings.inc.php
+config/settings.old.php
+app/config/parameters.php
+app/config/parameters.yml
+app/config/parameters.php.bak
+config/settings.inc.php.bak
+
+# --- Sensitive directories ---
+admin/autoupgrade/
+app/
+cache/
+classes/
+controllers/
+modules/
+override/
+themes/
+translations/
+upload/
+download/
+img/
+mails/
+log/
+var/
+var/logs/
+vendor/
+
+# --- Logs and exports ---
+log/
+var/logs/dev.log
+var/logs/prod.log
+admin/export/
+admin/_PS_ADMIN_DIR_/
+
+# --- Common backup / dump artifacts ---
+backup.sql
+database.sql
+prestashop.sql
+dump.sql
+admin/backups/
+admin/backups/backup.sql
+db.sql.gz
+
+# --- Webservice API ---
+api/
+api/customers
+api/orders
+api/products
+webservice/dispatcher.php
+
+# --- High-value / frequently exploited paths ---
+modules/ps_emailsubscription/
+modules/blockwishlist/
+modules/productcomments/
+modules/pscleaner/
+admin/filemanager/
+admin/themes/default/template/
+
+# --- Generic sensitive files ---
+.env
+.htaccess
+.htpasswd
+.git/config
+error_log
+php.ini
+info.php
+phpinfo.php

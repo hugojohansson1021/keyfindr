@@ -1,0 +1,56 @@
+# Shopify wordlist for find_hidden_pages.py
+# Curated list of Shopify-specific paths. Lines starting with "#" are comments.
+#
+# NOTE: Shopify is a hosted SaaS platform. The admin/backend is not reachable
+# by path fuzzing on the storefront domain, so this list focuses on the
+# publicly reachable storefront routes, JSON endpoints, and fingerprinting
+# paths that confirm a Shopify store and may leak product/collection data.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/shopify.txt
+
+# --- Fingerprint / platform confirmation ---
+admin
+.well-known/shopify/monorail
+cdn.shopify.com
+robots.txt
+sitemap.xml
+sitemap_products_1.xml
+sitemap_collections_1.xml
+sitemap_pages_1.xml
+
+# --- Storefront JSON endpoints (data exposure) ---
+products.json
+collections.json
+collections/all/products.json
+products/.json
+sitemap.xml?from=1&to=100
+cart.js
+cart.json
+
+# --- Common storefront routes ---
+account/
+account/login
+account/register
+cart
+collections/
+collections/all
+pages/
+search
+checkout
+password
+
+# --- Apps / proxy paths ---
+apps/
+tools/
+a/
+services/
+
+# --- Theme / asset hints ---
+assets/
+assets/theme.js
+assets/theme.css
+
+# --- Generic ---
+robots.txt
+favicon.ico

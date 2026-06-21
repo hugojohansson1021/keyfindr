@@ -1,0 +1,68 @@
+# Ghost wordlist for find_hidden_pages.py
+# Curated list of Ghost (Node.js blogging CMS) paths. Lines starting with "#" are comments.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/ghost.txt
+
+# --- Core entry points ---
+ghost/
+ghost/api/
+ghost/#/signin
+ghost/#/setup
+ghost/api/admin/site/
+ghost/api/content/settings/
+
+# --- Admin / Content API ---
+ghost/api/admin/
+ghost/api/admin/users/
+ghost/api/admin/posts/
+ghost/api/admin/pages/
+ghost/api/admin/members/
+ghost/api/admin/site/
+ghost/api/content/posts/
+ghost/api/content/pages/
+ghost/api/content/tags/
+ghost/api/content/authors/
+ghost/api/content/settings/
+
+# --- Version / fingerprint disclosure ---
+ghost/api/admin/site/
+robots.txt
+sitemap.xml
+sitemap-pages.xml
+sitemap-posts.xml
+sitemap-authors.xml
+sitemap-tags.xml
+
+# --- Config files (high-value) ---
+config.production.json
+config.development.json
+config.json
+content/data/ghost.db
+
+# --- Sensitive directories ---
+content/
+content/data/
+content/images/
+content/themes/
+content/logs/
+content/settings/
+content/adapters/
+
+# --- Common backup / dump artifacts ---
+backup.json
+ghost.db
+content/data/ghost.db
+backup.sql
+dump.sql
+
+# --- Feeds ---
+rss/
+feed/
+
+# --- Generic sensitive files ---
+.env
+.ghost.json
+.htaccess
+.git/config
+error_log

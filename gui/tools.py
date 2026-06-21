@@ -74,10 +74,11 @@ TOOLS: dict[str, dict[str, Any]] = {
             {
                 "name": "wordlist",
                 "flag": "--wordlist",
-                "type": "text",
+                "type": "select",
                 "required": True,
-                "default": "common.txt",
-                "label": "Wordlist path",
+                "default": "wordlists/wordpress.txt",
+                "options_source": "wordlists",
+                "label": "Wordlist",
             },
             {
                 "name": "threads",

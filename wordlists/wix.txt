@@ -1,0 +1,46 @@
+# Wix wordlist for find_hidden_pages.py
+# Curated list of Wix-specific paths. Lines starting with "#" are comments.
+#
+# NOTE: Wix is a hosted SaaS platform. There is no self-hosted backend to fuzz;
+# the editor/admin lives on wix.com, not the published site. This list focuses
+# on publicly reachable storefront/blog routes, JSON data endpoints, and
+# fingerprinting paths that confirm a Wix site.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/wix.txt
+
+# --- Fingerprint / platform confirmation ---
+robots.txt
+sitemap.xml
+_api/v1/access-tokens
+_partials/
+_functions/
+_functions-dev/
+
+# --- Wix data / velo (corvid) backend endpoints ---
+_functions/
+_api/wix-ecommerce-storefront-web/
+_api/cloud-data/v1/wix-data/collections/query
+_api/communities-blog-node-api/
+_api/members-area/
+
+# --- Common app routes ---
+account/my-account
+blog
+shop
+store
+cart
+checkout
+booking-calendar
+events
+forum
+
+# --- Sitemaps ---
+sitemap.xml
+blog-sitemap.xml
+store-products-sitemap.xml
+pages-sitemap.xml
+
+# --- Generic ---
+favicon.ico
+.well-known/

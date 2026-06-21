@@ -1,0 +1,49 @@
+# Squarespace wordlist for find_hidden_pages.py
+# Curated list of Squarespace-specific paths. Lines starting with "#" are comments.
+#
+# NOTE: Squarespace is a hosted SaaS platform. The admin/config panel lives on
+# squarespace.com, not the published domain, so it cannot be path-fuzzed. This
+# list focuses on publicly reachable routes, the ?format= JSON trick, and
+# fingerprinting paths that confirm a Squarespace site.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/squarespace.txt
+
+# --- Fingerprint / platform confirmation ---
+robots.txt
+sitemap.xml
+config
+?format=json-pretty
+?format=json
+
+# --- JSON data exposure (?format=json) ---
+home?format=json
+shop?format=json
+blog?format=json
+about?format=json
+
+# --- Common storefront / blog routes ---
+shop
+store
+cart
+checkout
+blog
+about
+contact
+account/login
+search
+
+# --- Commerce API hints ---
+api/
+api/commerce/
+api/open/
+universal/
+
+# --- Sitemaps and feeds ---
+sitemap.xml
+blog?format=rss
+?format=rss
+
+# --- Generic ---
+favicon.ico
+.well-known/

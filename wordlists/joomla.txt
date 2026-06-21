@@ -1,0 +1,100 @@
+# Joomla wordlist for find_hidden_pages.py
+# Curated list of Joomla-specific paths. Lines starting with "#" are comments.
+#
+# Usage:
+#   python find_hidden_pages.py --url https://example.com --wordlist wordlists/joomla.txt
+
+# --- Core entry points ---
+administrator/
+administrator/index.php
+index.php
+index.php?option=com_users&view=login
+administrator/index.php?option=com_login
+
+# --- Version / fingerprint disclosure ---
+README.txt
+LICENSE.txt
+htaccess.txt
+web.config.txt
+administrator/manifests/files/joomla.xml
+language/en-GB/en-GB.xml
+language/en-GB/install.xml
+plugins/system/cache/cache.xml
+templates/system/css/system.css
+media/system/js/
+
+# --- Config and backup variants ---
+configuration.php
+configuration.php.bak
+configuration.php-dist
+configuration.php.old
+configuration.php.save
+configuration.php.swp
+configuration.php~
+configuration.bak
+
+# --- Sensitive directories ---
+administrator/components/
+administrator/modules/
+administrator/templates/
+administrator/logs/
+administrator/cache/
+components/
+modules/
+plugins/
+templates/
+cache/
+logs/
+tmp/
+cli/
+bin/
+includes/
+libraries/
+
+# --- Common backup / dump artifacts ---
+backup.zip
+backup.sql
+joomla.sql
+database.sql
+site.sql
+dump.sql
+tmp/backup/
+administrator/backups/
+
+# --- Akeeba Backup (very common, high-value) ---
+administrator/components/com_akeeba/
+administrator/components/com_akeeba/backup/
+administrator/index.php?option=com_akeeba
+
+# --- High-value / frequently vulnerable components ---
+administrator/components/com_admin/
+administrator/components/com_users/
+administrator/components/com_config/
+administrator/components/com_installer/
+administrator/components/com_joomlaupdate/
+administrator/components/com_media/
+components/com_content/
+components/com_users/
+components/com_contact/
+components/com_jce/
+components/com_fabrik/
+components/com_jdownloads/
+components/com_k2/
+components/com_virtuemart/
+
+# --- API and feeds (Joomla 4+) ---
+api/
+api/index.php/v1/users
+api/index.php/v1/config/application
+index.php?format=feed&type=rss
+index.php?format=feed&type=atom
+
+# --- Generic sensitive files ---
+.env
+.htaccess
+.htpasswd
+.git/config
+error_log
+php.ini
+info.php
+phpinfo.php
