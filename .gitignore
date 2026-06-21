@@ -9,3 +9,9 @@ reports/
 
 # personal dev notes
 dev.txt
+
+# Generated scan reports (do not commit)
+doldasidor_*.csv
+*.csv
+reports/
+secret_scan_*.json
