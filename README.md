@@ -55,7 +55,7 @@ alla skript på ett ställe så du slipper komma ihåg flaggor.
 Under formuläret visas ett inbyggt terminalfönster som speglar exakt vad
 skriptet skriver ut medan det kör. Längst upp visas det fullständiga
 kommandot som körs (t.ex.
-`run … find_hidden_pages.py --url https://currykitchen.se/ --wordlist wordlists/wordpress.txt --threads 20 --timeout 5`)
+`run … find_hidden_pages.py --url https://example.se/ --wordlist wordlists/wordpress.txt --threads 20 --timeout 5`)
 så att en körning alltid är reproducerbar från CLI.
 
 Knappar i terminalens verktygsrad:
@@ -68,7 +68,7 @@ Knappar i terminalens verktygsrad:
 sista raderna, inte i bruset ovanför:
 
 - `[HITTAD]`-rader = bekräftade träffar med `Status` och svarets `Längd`,
-  t.ex. `[HITTAD] https://currykitchen.se/wp-login.php (Status: 200, Längd: 1311)`.
+  t.ex. `[HITTAD] https://example.se/wp-login.php (Status: 200, Längd: 1311)`.
 - Slutsammanfattningen talar om var resultatet sparats, t.ex.
   `Sökning klar! Hittade sidor sparade i doldasidor_currykitchen_se.csv`.
 - `[exit 0]` betyder att processen avslutades utan fel; en annan kod
@@ -85,7 +85,7 @@ Komplett standardsökning via TLS-certifikat, webbcrawling och publika
 Certificate Transparency-loggar från `crt.sh`:
 
 ```bash
-python subdomain_spider.py --domain https://emaxmedia.se/
+python subdomain_spider.py --domain https://example.se/
 ```
 
 Sök även med den inbyggda DNS-ordlistan:
